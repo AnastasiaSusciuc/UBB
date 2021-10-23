@@ -1,0 +1,36 @@
+Program state
+Exe Stack: (int v;(v=2;print(v)))  
+Sym Table:  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: (v=2;print(v)) int v  
+Sym Table:  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: (v=2;print(v))  
+Sym Table: v-0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: print(v) v=2  
+Sym Table: v-0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: print(v)  
+Sym Table: v-2  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack:  
+Sym Table: v-2  
+Output Console: 2  
+File Table:  
+

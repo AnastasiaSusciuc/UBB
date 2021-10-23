@@ -1,0 +1,18 @@
+8. a. Determine the lowest common multiple of the elements from a list.
+   b. Substitute in a list, all occurrence of a value e with a value e1.
+
+Mathematical models:
+a:
+    gcd(a, b) =
+        a, b = 0
+        gcd(b, a%b), otherwise
+
+    lcm([l1, l2, .., ln]) =
+            1, n = 0
+            (l1 * lcm([l2, .., ln]) ) / gcd(l1, lcm([l2, .., ln]) ), otherwise
+
+b:
+    substitute([l1, l2, .., ln], e, e1) =
+            [], n = 0
+            e1 U substitute([l2, .., ln]), l1 = e
+            l1 U substitute([l2, .., ln]), otherwise

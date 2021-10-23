@@ -1,0 +1,3 @@
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/cmake-build-debug/CMakeFiles/R1.dir
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

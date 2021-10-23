@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/main.cpp
+iostream
+-
+p8a.h
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/p8a.h
+
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/p8a.cpp
+p8a.h
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/p8a.h
+iostream
+-
+
+C:/Users/susci/Desktop/Facultate/Anul 2/PLF/R1/p8a.h
+
