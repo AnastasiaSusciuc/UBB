@@ -49,7 +49,7 @@ public class ArithExp implements IExp {
                             return new IntValue(n1 / n2);
                         }
                     default:
-                        throw new ExpressionException("Incorect operation");
+                        throw new ExpressionException("Incorrect operation");
                 }
             }
             else {

@@ -29,6 +29,16 @@ public class PrgState {
         out = valueMyList;
     }
 
+    @Override
+    public String toString() {
+        String str = "Program state\n" +
+                "Exe Stack: " + exeStack + " \n" +
+                "Sym Table: " + symTable + " \n" +
+                "Output Console: " + out + " \n";
+//        +"File Table: " + fileTable + " \n";
+        return str;
+    }
+
     public IMyStack<IStmt> getStack() {
         return exeStack;
     }
@@ -43,16 +53,6 @@ public class PrgState {
 
     public IMyDictionary<StringValue, BufferedReader> getFileTable() {
         return fileTable;
-    }
-
-    @Override
-    public String toString() {
-        String str = "Program state\n" +
-                "Exe Stack: " + exeStack + " \n" +
-                "Sym Table: " + symTable + " \n" +
-                "Output Console: " + out + " \n" +
-                "File Table: " + fileTable + " \n";
-        return str;
     }
 
     public void setExeStack(IMyStack<IStmt> stack) {

@@ -86,7 +86,6 @@ public class Main {
         repo2.addState(prg2);
         repo3.addState(prg3);
 
-
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1",example_1.toString(),ctr1));
         menu.addCommand(new RunExample("2",example_2.toString(),ctr2));

@@ -8,9 +8,9 @@ public class CompStmt implements IStmt {
     private IStmt first;
     private IStmt second;
 
-    public CompStmt(IStmt deepCopy, IStmt deepCopy1) {
-        first = deepCopy;
-        second = deepCopy1;
+    public CompStmt(IStmt copy1, IStmt copy2) {
+        first = copy1;
+        second = copy2;
     }
 
     @Override

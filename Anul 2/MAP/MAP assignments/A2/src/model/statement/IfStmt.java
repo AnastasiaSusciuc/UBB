@@ -15,11 +15,10 @@ public class IfStmt implements IStmt {
     private IStmt thenStatement;
     private IStmt elseStatement;
 
-    public IfStmt(IExp e, IStmt t, IStmt el) {
+    public IfStmt(IExp e, IStmt thenSt, IStmt elseSt) {
         expression = e;
-        thenStatement = t;
-        elseStatement = el;
-
+        thenStatement = thenSt;
+        elseStatement = elseSt;
     }
 
     @Override

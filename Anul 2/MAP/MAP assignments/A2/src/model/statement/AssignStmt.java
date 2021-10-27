@@ -12,9 +12,9 @@ public class AssignStmt implements IStmt {
     String id;
     IExp exp;
 
-    public AssignStmt(String s, IExp deepCopy) {
+    public AssignStmt(String s, IExp copy) {
         id = s;
-        exp = deepCopy;
+        exp = copy;
     }
 
     @Override

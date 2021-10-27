@@ -11,8 +11,8 @@ import model.value.IValue;
 public class PrintStmt implements IStmt{
     IExp exp;
 
-    public PrintStmt(IExp deepCopy) {
-        exp = deepCopy;
+    public PrintStmt(IExp copy) {
+        exp = copy;
     }
 
     @Override
