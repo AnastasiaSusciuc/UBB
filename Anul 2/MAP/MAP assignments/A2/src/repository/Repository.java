@@ -4,9 +4,7 @@ import model.state.PrgState;
 import model.exception.RepositoryException;
 import model.statement.IStmt;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,15 +24,6 @@ public class Repository implements IRepository {
         catch (IOException e) {
             throw new RepositoryException(e.getMessage());
         }
-        states = new LinkedList<>();
-    }
-
-    public Repository() {
-        states = new LinkedList<>();
-    }
-
-    public Repository(String givenFile) {
-        this.fileName = givenFile;
         states = new LinkedList<>();
     }
 
@@ -59,9 +48,10 @@ public class Repository implements IRepository {
     public void printPrgState(PrgState prgState) throws RepositoryException, IOException {
         File yourFile = new File(fileName);
         boolean res = yourFile.createNewFile();
-        try (FileWriter fileWriter = new FileWriter(yourFile, true)) {
-            fileWriter.write(prgState + "\n");
-            fileWriter.close();
+        try {
+            PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+            logFile.write(prgState + "\n");
+            logFile.close();
         }
         catch (IOException e) {
             throw new RepositoryException(e.getMessage());

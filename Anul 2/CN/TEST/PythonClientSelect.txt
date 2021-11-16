@@ -1,0 +1,67 @@
+import socket, struct, sys, select, threading
+
+def communication_thread():
+    while True:
+        # Listen for incoming messages from the server (self_tcp_socket) or other clients(self_udp_socket)
+        sockets, _, _ = select.select([self_tcp_socket, self_udp_socket], [], [])
+        if self_tcp_socket in sockets:
+            operation = self_tcp_socket.recv(1)
+            ip = socket.inet_ntoa(self_tcp_socket.recv(4))
+            port = struct.unpack("!H", self_tcp_socket.recv(2))[0]
+
+            if operation == b'L':
+                print("Client " + ip + ":" + str(port) + " left the chatroom.")
+                other_clients.discard((ip, port))
+            elif operation == b'N':
+                print("Client " + ip + ":" + str(port) + " joined the chatroom.")
+                other_clients.add((ip, port))
+            else:
+                print("Unknown operation received from server")
+        
+        if self_udp_socket in sockets:
+            message, adress = self_udp_socket.recvfrom(256)
+            print("Client " + adress[0] + ":" + adress[1] + "said:\n" + str(message))
+
+if __name__ == "__main__":
+    # Connect to the server:
+    self_tcp_socket = socket.socket()
+    self_tcp_socket.connect((sys.argv[1], int(sys.argv[2])))
+
+    # Receive the list of existing clients from the server:
+    number_of_clients = struct.unpack("!I", self_tcp_socket.recv(4))[0]
+    other_clients = set() # Store them in a set.
+    for _ in range(number_of_clients):
+        other_clients.add((
+            socket.inet_ntoa(self_tcp_socket.recv(4)),
+            struct.unpack("!H", self_tcp_socket.recv(2))[0]
+        ))
+    
+    # Create the UDP socket used to communicate with all other clients:
+    self_udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # Now, by default, the OS doesn't assing a port to the socket until
+    # it's used for the first time, so we can force this by just
+    # sending a random message somewhere:
+    self_udp_socket.sendto(b'random', ('192.254.254.254', 24544))
+
+    # Now we can get the ip and port associated to this socket and send them to the server
+    # which will then send them to all other clients
+    self_udp_ip, self_udp_port = self_udp_socket.getsockname()
+    print("My UDP adress is: " + self_udp_ip + ":" + str(self_udp_port))
+    self_tcp_socket.send(socket.inet_aton(self_udp_ip))
+    self_tcp_socket.send(struct.pack("!H", self_udp_port))
+
+    # Start the thread which will handle incoming messages from other clients and the server
+    # daemon = True so that the thread will stop when the main thread stops.
+    threading.Thread(target=communication_thread, daemon=True).start()
+
+    while True:
+        # Accept user_input (a "chat message") and send it to all other clients,
+        # or leave the chat room and stop if the user input is "QUIT".
+        user_input = input()
+        if user_input == "QUIT":
+            # Tell the server we are leaving:
+            self_tcp_socket.send(b'L')
+            print("Leaving the chat room and shutting down...")
+            exit(0)
+        for other_client in other_clients:
+            self_udp_socket.sendto(user_input.encode('utf-8'), other_client)

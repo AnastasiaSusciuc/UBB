@@ -1,0 +1,150 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+struct port_association{
+    int tcp_port;
+    int udp_recv_port;
+};
+
+fd_set master;
+fd_set read_fds;
+int fdmax = 0;
+struct port_association dictionary_ports[500];
+int len_dictionary_ports = 0;
+int crt;
+int welcome_fd;
+
+void initialise_dict_ports() {
+    for(int i = 0; i < 500; i++) {
+        dictionary_ports[i].tcp_port = -1;
+        dictionary_ports[i].udp_recv_port = -1;
+    }
+}
+
+
+void sendToALL(int new_port, char connect_disconnect) {
+    int fd;
+    for(fd = 0; fd <= fdmax; fd++) {
+        if (FD_ISSET(fd, &master))
+            // except the listener and ourselves
+            if (fd != welcome_fd && fd != crt) {
+                if ( send(fd, &connect_disconnect, sizeof(connect_disconnect), 0) == -1) {
+                    perror("Error on sending message to everyone");
+                }
+                if ( send(fd, &new_port, sizeof(new_port), 0) == -1) {
+                    perror("Error on sending message to everyone");
+                }
+            }
+    }
+}
+
+int main() {
+    int new_connection_fd;
+    struct sockaddr_in server_addr, client_addr;
+    int len_addr;
+    len_addr = sizeof(struct sockaddr_in);
+
+    initialise_dict_ports();
+
+    welcome_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if(welcome_fd < 0) {
+        perror("Error on creating welcome_fd");
+        exit(1);
+    }
+    int val = 1;
+
+    setsockopt(welcome_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(2020);
+
+    if(bind(welcome_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
+        close(welcome_fd);
+        perror("Error on bind");
+        exit(1);
+    }
+
+    listen(welcome_fd, 10);
+
+    FD_ZERO(&master);
+    FD_ZERO(&read_fds);
+    FD_SET(welcome_fd, &master);
+    fdmax = welcome_fd + 1;
+
+    for(;;) {
+        read_fds = master;
+        if(select(fdmax + 1, &read_fds, NULL, NULL, NULL) < 0) {
+            close(welcome_fd);
+            for(int i = 0; i <= fdmax; i++) {
+                if(FD_ISSET(i, &master)) {
+                    close(i);
+                }
+            }
+            perror("Error on select");
+            exit(1);
+        }
+        for(int fd = 0; fd <= fdmax; fd++) {
+            if(FD_ISSET(fd, &read_fds)) {
+                if(fd == welcome_fd) {
+                    new_connection_fd = accept(welcome_fd, (struct sockaddr*)&client_addr, (socklen_t*)&len_addr);
+                    printf("New incoming connection from: (%s, %d)\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+                    FD_SET(new_connection_fd, &master);
+                    if(new_connection_fd > fdmax) {
+                        fdmax = new_connection_fd;
+                    }
+                    int new_client_port;
+                    int ret;
+                    ret = recv(new_connection_fd, &new_client_port, sizeof(new_client_port), 0);
+                    if(ret < 0) {
+                        printf("Error on receiving client port\n");
+                    } else {
+                        crt = new_connection_fd;
+
+                        dictionary_ports[len_dictionary_ports].tcp_port = ntohs(client_addr.sin_port);
+                        dictionary_ports[len_dictionary_ports].udp_recv_port = new_client_port;
+                        sendToALL(new_client_port, 'c');
+                    }
+                } else {
+                    int ret;
+                    char buff[300];
+                    ret = recv(fd, buff, sizeof(buff), 0);
+                    if(ret <= 0) {
+                        if(ret < 0) {
+                            perror("Error on receive");
+                        } else if(ret == 0) {
+                            struct sockaddr_in addr_buff;
+                            int len_addr_buff;
+                            len_addr_buff = sizeof(addr_buff);
+                            getpeername(fd, (struct sockaddr*)&addr_buff, (socklen_t*)&len_addr_buff);
+                            int disc_tcp_port;
+                            int disc_udp_port = -1;
+                            disc_tcp_port = ntohs(addr_buff.sin_port);
+                            printf("Client %d forcibly hung up\n", disc_tcp_port);
+                            for(int i = 0; i <= len_dictionary_ports; i++) {
+                                if(dictionary_ports[i].tcp_port == disc_tcp_port) {
+                                    disc_udp_port = dictionary_ports[i].udp_recv_port;
+                                    dictionary_ports[i].tcp_port = -1;
+                                    dictionary_ports[i].udp_recv_port = -1;
+                                }
+                            }
+                            if(disc_udp_port >= 0) {
+                                crt = fd;
+                                sendToALL(disc_udp_port, 'd');
+                            }
+                            FD_CLR(fd, &master);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,68 @@
+% 1.
+% a. Write a predicate to determine the lowest common multiple of a list formed from integer numbers.
+% b. Write a predicate to add a value v after 1-st, 2-nd, 4-th, 8-th, … element in a list.
+
+% a
+
+% Mathematical model:
+% gcd(a, b) =
+%   gcd(-a, b), a < 0
+%   gcd(a, -b), b < 0
+%	a, b = 0
+%	b, a = 0
+%	gcd(a - b, b), a > b
+%	gcd(a, b - a), a <= b
+
+% gcd(A:number, B:number, R:number)
+% gcd(i, i, o)
+
+gcd(A, B, R) :-
+    A < 0, !,
+    gcd(-A, B, R).
+gcd(A, B, R) :-
+    B < 0, !,
+    gcd(A, -B, R).
+gcd(A, 0, A) :- A > 0.
+gcd(0, B, B) :- B > 0.
+gcd(A, B, R) :-
+    A > B, B > 0,
+    A1 is A - B,
+    gcd(A1, B, R).
+gcd(A, B, R) :-
+    A =< B, A > 0,
+    B1 is B - A,
+    gcd(A, B1, R).
+
+% Mathematical model:
+% lcm(a, b) = a * b / gcd(a, b)
+% lcm(A:number, B:number, R:number)
+% lcm(i, i, o)
+
+lcm(A, B, R) :-
+    gcd(A, B, RGCD),
+    R is A * B / RGCD.
+
+% b
+
+% Mathematical model:
+% insert_pow(l1...ln, v, p2, index) =
+%	[], n = 0
+%	l1 + v + insert_pow(l2...ln, v, p2 * 2, index + 1), index = p2
+%	l1 + insert_pow(l2...ln, v, p2, index + 1), index != p2
+
+% insert_pow(L:list, V:number, P2:number, INDEX:number, R:list)
+% insert_pow(i, i, i, i, o)
+
+insert_pow([], _, _, _, []) :- !.
+insert_pow([H|T], V, P2, INDEX, [H, V|R]) :- P2 =:= INDEX,
+    New_p2 is 2 * P2,
+    New_index is INDEX + 1,
+    insert_pow(T, V, New_p2, New_index, R).
+insert_pow([H|T], V, P2, INDEX, [H|R]) :- P2 =\= INDEX,
+    New_index is INDEX + 1,
+    insert_pow(T, V, P2, New_index, R).
+
+% insert(L:list, V:number, R:list)
+% insert(i, i, o)
+
+insert(L, V, R) :- insert_pow(L, V, 1, 1, R).

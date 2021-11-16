@@ -49,4 +49,5 @@ public class LogicExp implements IExp {
     public IExp deepCopy() {
         return new LogicExp(e1.deepCopy(), e2.deepCopy(), op);
     }
+
 }

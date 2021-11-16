@@ -6,6 +6,7 @@ import model.ADT.IMyStack;
 import model.ADT.MyDictionary;
 import model.ADT.MyList;
 import model.ADT.MyStack;
+import model.expression.LogicExp;
 import model.state.PrgState;
 import model.exception.*;
 import model.expression.ArithExp;
@@ -39,6 +40,15 @@ public class Main {
                         new PrintStmt(new VarExp("v"))
                 )
         );
+        // int v; v = 2; if (v > 1 && 3 > 2) print(2); else print(7);
+//        IStmt example_1 = new CompStmt(
+//                new VarDeclStmt("v", new IntType()),
+//                new CompStmt(
+//                        new AssignStmt("v", new ValueExp(new IntValue(2))),
+//                                new IfStmt(new LogicExp(new VarExp("v"), new ValueExp(new IntValue(1)), 1), new PrintStmt(new VarExp("v")),
+//                                        new PrintStmt(new VarExp("v")))
+//                )
+//                );
 
         PrgState prg1 = new PrgState(stack1, new MyDictionary<String, IValue>(),  new MyList<IValue>(), new MyDictionary<StringValue, BufferedReader>(), example_1);
         IRepository repo1 = new Repository(prg1, "log1.txt");

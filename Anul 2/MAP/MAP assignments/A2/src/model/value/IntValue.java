@@ -11,7 +11,7 @@ public class IntValue implements IValue {
     }
 
     public IntValue() {
-        val  = 0;
+        val = 0;
     }
 
     public int getValue() {

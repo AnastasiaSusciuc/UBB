@@ -34,8 +34,8 @@ public class PrgState {
         String str = "Program state\n" +
                 "Exe Stack: " + exeStack + " \n" +
                 "Sym Table: " + symTable + " \n" +
-                "Output Console: " + out + " \n";
-//        +"File Table: " + fileTable + " \n";
+                "Output Console: " + out + " \n" +
+                "File Table: " + fileTable + " \n";
         return str;
     }
 

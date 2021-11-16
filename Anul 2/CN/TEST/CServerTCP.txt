@@ -1,0 +1,108 @@
+#include <stdio.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <errno.h>
+
+#define    MAX_STR 105
+
+#define bool int32_t
+#define true 1
+#define false 0
+
+bool send_int(int32_t socket, int32_t x) {
+    x = htonl(x);
+    int32_t nb = send(socket, (char*)&x, sizeof(int32_t), 0);
+    if (nb != sizeof(int32_t)) {
+        printf("Error on sending int32_t: %d bytes", nb);
+        return true;
+    }
+    return false;
+}
+
+bool receive_int(int32_t socket, int32_t *x) {
+    int32_t nb = recv(socket, (char*)x, sizeof(int32_t), 0);
+    *x = ntohl(*x);
+    if (nb != sizeof(int32_t)) {
+        printf("Error on receiving int32_t: %d bytes", nb);
+        return true;
+    }
+    return false;
+}
+
+bool send_str(int32_t socket, char *str) {
+    int32_t len = strlen(str);
+    send_int(socket, len);
+    int32_t nb = send(socket, str, len, 0);
+    if (nb != len) {
+        printf("Error on sending string: %d bytes", nb);
+        return true;
+    }
+    return false;
+}
+
+bool receive_str(int32_t socket, char *str) {
+    memset(str, 0, MAX_STR);
+    int32_t len;
+    receive_int(socket, &len);
+    int32_t nb = recv(socket, str, len, 0);
+    if (nb != len) {
+        printf("Error on receiving string: %d bytes", nb);
+        return true;
+    }
+    return false;
+}
+
+void handle_communication(int32_t socket, struct sockaddr_in* client) {
+}
+
+int32_t main() {
+    int32_t welcomingSocket;
+    welcomingSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (welcomingSocket < 0) {
+        printf("Error on welcoming socket\n");
+        return 1;
+    }
+
+    struct sockaddr_in server;
+    memset(&server, 0, sizeof(server));
+    server.sin_port = htons(8011);
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+
+    if (bind(welcomingSocket, (struct sockaddr *) &server, sizeof(server)) < 0) {
+        perror("Bind error:\n");
+        return 1;
+    }
+
+    listen(welcomingSocket, 5);
+    struct sockaddr_in client;
+    int32_t clientSize = sizeof(client);
+    memset(&client, 0, sizeof(client));
+
+    while (1) {
+        printf("Listening for incomming connections\n");
+        int32_t commSocket = accept(welcomingSocket, (struct sockaddr *) &client, (socklen_t*) &clientSize);
+        int32_t err = errno;
+
+        if (commSocket < 0) {
+            printf("Accept error: %d\n", err);
+            continue;
+        }
+
+        printf("Incoming connected client from: %s:%d\n", inet_ntoa(client.sin_addr), ntohs(client.sin_port));
+
+        handle_communication(commSocket, &client);
+
+        close(commSocket);
+    }
+
+    close(welcomingSocket);
+
+    return 0;
+}

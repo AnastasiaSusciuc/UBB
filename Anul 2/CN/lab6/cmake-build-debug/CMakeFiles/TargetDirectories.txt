@@ -1,0 +1,3 @@
+C:/Users/susci/Desktop/UBB/Anul 2/CN/lab6/cmake-build-debug/CMakeFiles/lab6.dir
+C:/Users/susci/Desktop/UBB/Anul 2/CN/lab6/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/susci/Desktop/UBB/Anul 2/CN/lab6/cmake-build-debug/CMakeFiles/rebuild_cache.dir

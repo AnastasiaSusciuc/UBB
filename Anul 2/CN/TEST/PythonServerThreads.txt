@@ -1,0 +1,112 @@
+import socket
+import struct
+import threading
+
+Result = []  # the result list
+done = False
+myLock = threading.Lock()
+Threads = []
+
+e = threading.Event()
+e.clear()
+
+def worker(socket):
+    global Result, done, myLock, e
+    n = receive_int(socket)
+
+    if n == 0:
+        myLock.acquire()
+        e.set()
+        done = True
+        myLock.release()
+    else:
+        N = []
+        for i in range(n):
+            N.append(receive_float(socket))
+
+        myLock.acquire()
+        Result = mergeSort(Result, N)
+        myLock.release()
+
+    while(True):
+        if done:
+            send_int(len(Result),socket)
+            for x in Result:
+                send_float(x,socket)
+            socket.close()
+            return
+
+def mergeSort(List1,List2):
+    return sorted(List1+List2)
+
+
+def send_int(value, socket):
+    i_bytes = struct.pack('!i', value)
+    socket.send(i_bytes)
+
+
+def receive_int(socket):
+    i_bytes = socket.recv(4)
+    return struct.unpack("!i", i_bytes)[0]
+
+
+def receive_float(socket):
+    i_bytes = socket.recv(4)
+    return struct.unpack("!f", i_bytes)[0]
+
+def send_float(value, socket):
+    i_bytes = struct.pack('!f', value)
+    socket.send(i_bytes)
+
+
+def send_str(word, socket):
+    send_int(len(word), socket)
+    word_bytes = word.encode('utf-8')
+    socket.send(word_bytes)
+
+
+def receive_str(socket):
+    len = receive_int(socket)
+    s_bytes = socket.recv(len)
+    return s_bytes.decode('ascii')
+
+
+welcome = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+try:
+    welcome.bind(('0.0.0.0', 8005))
+except socket.error as err:
+    print(err)
+    exit(1)
+
+welcome.listen(10)
+
+
+def closeThreads():
+    global e, myLock, done, Result
+    while True:
+        e.wait()
+        for t in Threads:
+            t.join()
+        print("all threads are finished now")
+        myLock.acquire()
+        e.clear()
+        threads = []
+        done = False
+        Result = []
+        myLock.release()
+
+
+welcomeT = threading.Thread(target=closeThreads)
+welcomeT.start()
+
+while True:
+    print('Listening for connections...')
+    socket, addr = welcome.accept()
+    print('Client: ', addr)
+
+    t = threading.Thread(target=worker, args=(socket,))
+    Threads.append(t)
+    t.start()
+
+welcome.close()

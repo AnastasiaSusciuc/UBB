@@ -1,0 +1,116 @@
+import socket
+import sys
+import threading
+import time
+import datetime
+
+broadcast_addr = sys.argv[1]
+port = 7777
+peers = {}
+malformed_msg = []
+lock = threading.Lock()
+th = 3
+
+
+def date_thread(date_socket):
+    while True:
+        print("SENDING DATEQUERY\n")
+        date_socket.sendto(b"DATEQUERY", (broadcast_addr, port))
+        lock.acquire()
+        keys = []
+        for key in peers:
+            peers[key][1] -= 1
+            if peers[key][1] == 0:
+                keys.append(key)
+        for key in keys:
+            peers.pop(key)
+
+        lock.release()
+        time.sleep(3)
+
+
+def time_thread(time_socket):
+    while True:
+        print("SENDING TIMEQUERY\n")
+        time_socket.sendto(b"TIMEQUERY", (broadcast_addr, port))
+        lock.acquire()
+        keys = []
+        for key in peers:
+            peers[key][1] -= 1
+            if peers[key][1] == 0:
+                keys.append(key)
+        for key in keys:
+            peers.pop(key)
+        lock.release()
+        time.sleep(3)
+
+
+def display_thread():
+    while True:
+        lock.acquire()
+        print(peers)
+        print(malformed_msg)
+        lock.release()
+        time.sleep(1)
+
+
+if __name__ == '__main__':
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    sock.bind(("", port))
+
+    t1 = threading.Thread(target=date_thread, args=(sock,), daemon=True)
+    t2 = threading.Thread(target=time_thread, args=(sock,), daemon=True)
+    t3 = threading.Thread(target=display_thread, args=(), daemon=True)
+
+    t1.start()
+    t2.start()
+    t3.start()
+
+    while True:
+        is_date = False
+        is_time = False
+
+        buf, addr = sock.recvfrom(32)
+        buf = buf.decode("ascii")
+        if buf == "DATEQUERY":
+            current_date = time.localtime()
+            final_date = time.strftime("DATE: %d/%m/%Y", current_date)
+            sock.sendto(final_date.encode(), (broadcast_addr, port))
+        elif buf == "TIMEQUERY":
+            current_time = time.localtime()
+            final_time = time.strftime("TIME: %H:%M:%S", current_time)
+            sock.sendto(final_time.encode(), (broadcast_addr, port))
+        else:
+            try:
+                datetime.datetime.strptime(buf, 'DATE %d-%m-%y')
+                is_date = True
+            except ValueError:
+                pass
+
+            try:
+                datetime.datetime.strptime(buf, 'TIME %H:%M:%S')
+                is_time = True
+            except ValueError:
+                pass
+
+            if is_date:
+                lock.acquire()
+                print("received date {}".format(buf))
+                if addr not in peers:
+                    peers[addr] = [buf, th]
+                else:
+                    peers[addr] = [buf, th]
+                lock.release()
+            elif is_time:
+                print("received time {}".format(buf))
+            else:
+                lock.acquire()
+                malformed_msg.append(buf)
+                lock.release()
+
+    t1.join()
+    t2.join()
+    t3.join()

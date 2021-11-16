@@ -30,11 +30,11 @@ public class VarDeclStmt implements IStmt {
             throw new StatementException("Variable is already declared");
         } else {
             if (type.equals(new IntType())) {
-                table.add(name, new IntValue());
+                table.add(name, new IntType().defaultValue());
             }else if (type.equals(new BoolType())) {
-                table.add(name, new BoolValue());
+                table.add(name, new BoolType().defaultValue());
             }else if (type.equals(new StringType())) {
-                table.add(name, new StringValue());
+                table.add(name, new StringType().defaultValue());
             }  else {
                 throw new StatementException("Type does not exist");
             }

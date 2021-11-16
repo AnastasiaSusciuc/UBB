@@ -45,7 +45,7 @@ public class MyDictionary<K,V> implements IMyDictionary <K, V> {
     public String toString() {
         StringBuilder content = new StringBuilder();
         for (Map.Entry<K, V> el : map.entrySet()) {
-            content.append(el.getKey()).append("-").append(el.getValue()).append(" ");
+            content.append(el.getKey()).append(" --> ").append(el.getValue()).append(" ");
         }
         return content.toString();
     }

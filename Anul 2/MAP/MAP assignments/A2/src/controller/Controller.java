@@ -43,7 +43,6 @@ public class Controller {
         while (!prg.getStack().isEmpty()) {
             try {
                 oneStep(prg);
-                //System.out.println(prg);
                 repository.printPrgState(prg);
             } catch (ControllerException | ADTException | StatementException | ExpressionException exception) {
                 throw new ControllerException(exception.getMessage());
@@ -51,51 +50,5 @@ public class Controller {
         }
     }
 
-    public void example() {
-        IMyStack<IStmt> stack = new MyStack<>();
-        IStmt example_1 = new CompStmt(
-                new VarDeclStmt("x", new IntType()),
-                new CompStmt(
-                        new AssignStmt("x", new ValueExp(new IntValue(17))),
-                        new PrintStmt(new VarExp("x"))
-                )
-        );
-
-        IStmt example_2 = new CompStmt(
-                new VarDeclStmt("x" , new IntType()),
-                new CompStmt(new AssignStmt("x", new ArithExp(
-                        new ValueExp(new IntValue(3)),
-                        new ArithExp(
-                                new ValueExp(new IntValue(5)), new ValueExp(new IntValue(7)), '*'
-                        ),
-                        '+'
-                )
-                ),
-                        new PrintStmt(new VarExp("x"))
-                )
-        );
-
-        IStmt example_3 = new CompStmt(
-                new VarDeclStmt("s" , new BoolType()),
-                new CompStmt(new VarDeclStmt("x", new IntType()),
-                        new CompStmt(
-                                new AssignStmt("s", new ValueExp(new BoolValue(true))),
-                                new CompStmt(
-                                        new IfStmt(
-                                                new VarExp("s"),
-                                                new AssignStmt("x", new ValueExp(new IntValue(20))),
-                                                new AssignStmt("x", new ValueExp(new IntValue(2)))
-                                        ),
-                                        new PrintStmt(new VarExp("x"))
-                                )
-                        )
-                )
-        );
-
-        stack.push(example_3);
-        PrgState state = new PrgState(stack, new MyDictionary<String, IValue>(), new MyList<IValue>());
-        System.out.println(state);
-        repository.addState(state);
-    }
 
 }

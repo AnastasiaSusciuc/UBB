@@ -1,0 +1,26 @@
+% Mathematical model:
+% gcd(x, y) =
+%	x, y = 0
+%	y, x = 0
+%	gcd(x % y, y), x >= y
+%	gcd(x, y % x), x < y
+
+% gcd(A:number, B:number, R:number)
+% gcd(i, i, o)
+
+gcd(X, Y, R) :-
+    X < 0, !,
+    gcd(-X, Y, R).
+gcd(X, Y, R) :-
+    Y < 0, !,
+    gcd(X, -Y, R).
+gcd(X, 0, X) :- X > 0.
+gcd(0, Y, Y) :- Y > 0.
+gcd(X, Y, R) :-
+    X > Y, Y > 0,
+    X1 is X - Y,
+    gcd(Y, X1, R).
+gcd(X, Y, R) :-
+    X =< Y, X > 0,
+    Y1 is Y - X,
+    gcd(X, Y1, R).
