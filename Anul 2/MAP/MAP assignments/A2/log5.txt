@@ -1,0 +1,54 @@
+Program state
+Exe Stack: (int nr2;(int v;(v=2;if (v<nr2) then {print(v)} else {print(nr2)})))  
+Sym Table:  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: (int v;(v=2;if (v<nr2) then {print(v)} else {print(nr2)})) int nr2  
+Sym Table:  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: (int v;(v=2;if (v<nr2) then {print(v)} else {print(nr2)}))  
+Sym Table: nr2 --> 0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: (v=2;if (v<nr2) then {print(v)} else {print(nr2)}) int v  
+Sym Table: nr2 --> 0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: (v=2;if (v<nr2) then {print(v)} else {print(nr2)})  
+Sym Table: v --> 0 nr2 --> 0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: if (v<nr2) then {print(v)} else {print(nr2)} v=2  
+Sym Table: v --> 0 nr2 --> 0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: if (v<nr2) then {print(v)} else {print(nr2)}  
+Sym Table: v --> 2 nr2 --> 0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack: print(nr2)  
+Sym Table: v --> 2 nr2 --> 0  
+Output Console:  
+File Table:  
+
+Program state
+Exe Stack:  
+Sym Table: v --> 2 nr2 --> 0  
+Output Console: 0  
+File Table:  
+

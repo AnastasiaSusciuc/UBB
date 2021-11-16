@@ -35,7 +35,6 @@ public class BoolValue implements IValue {
             return false;
         BoolValue t = (BoolValue) o;
         return t.val == val;
-        //return val.equals(t.val);
     }
 
     @Override

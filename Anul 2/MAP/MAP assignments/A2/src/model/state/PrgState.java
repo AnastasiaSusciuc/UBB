@@ -55,6 +55,10 @@ public class PrgState {
         return fileTable;
     }
 
+    public void setFileTable(IMyDictionary<StringValue, BufferedReader> newFileTable) {
+        fileTable = newFileTable;
+    }
+
     public void setExeStack(IMyStack<IStmt> stack) {
         exeStack = stack;
     }

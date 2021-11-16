@@ -49,7 +49,9 @@ public class Repository implements IRepository {
         File yourFile = new File(fileName);
         boolean res = yourFile.createNewFile();
         try {
-            PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(yourFile, true));
+            PrintWriter logFile = new PrintWriter(bw);
+
             logFile.write(prgState + "\n");
             logFile.close();
         }
