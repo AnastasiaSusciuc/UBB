@@ -1,6 +1,7 @@
 package model.statement;
 
 
+import model.ADT.IMyHeap;
 import model.ADT.IMyStack;
 import model.state.PrgState;
 import model.exception.ExpressionException;
@@ -29,7 +30,7 @@ public class IfStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws StatementException, ExpressionException {
         IMyStack<IStmt> stack = state.getStack();
-        IValue cond = expression.eval(state.getSymTable());
+        IValue cond = expression.eval(state.getSymTable(), state.getHeap());
         if (!cond.getType().equals(new BoolType())) {
             throw new StatementException("Condition is not of boolean");
         }

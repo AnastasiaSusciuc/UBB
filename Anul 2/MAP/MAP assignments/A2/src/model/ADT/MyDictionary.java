@@ -50,4 +50,8 @@ public class MyDictionary<K,V> implements IMyDictionary <K, V> {
         return content.toString();
     }
 
+    @Override
+    public Map<K, V> getContent() {
+        return map;
+    }
 }

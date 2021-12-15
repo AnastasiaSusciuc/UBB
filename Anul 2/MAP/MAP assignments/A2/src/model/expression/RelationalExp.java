@@ -1,4 +1,5 @@
 package model.expression;
+import model.ADT.IMyHeap;
 import model.type.IntType;
 import model.value.BoolValue;
 import model.value.IValue;
@@ -19,10 +20,10 @@ public class RelationalExp implements IExp {
     }
 
     @Override
-    public IValue eval(IMyDictionary<String, IValue> symTable) throws ExpressionException {
+    public IValue eval(IMyDictionary<String, IValue> symTable, IMyHeap<IValue> heap) throws ExpressionException {
         IValue val1, val2;
-        val1 = exp1.eval(symTable);
-        val2 = exp2.eval(symTable);
+        val1 = exp1.eval(symTable, heap);
+        val2 = exp2.eval(symTable, heap);
         if (val1.getType().equals(new IntType()) && val2.getType().equals(new IntType())) {
             IntValue intVal1, intVal2;
             intVal1 = (IntValue) val1;

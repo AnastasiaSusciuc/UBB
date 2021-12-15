@@ -12,14 +12,16 @@ public class PrgState {
     private IMyDictionary<String, IValue> symTable;
     private IMyList<IValue> out;
     private IMyDictionary<StringValue, BufferedReader> fileTable;
-    private IStmt originalProgram; //optional field, but good to have
+    private IStmt originalProgram;
+    private IMyHeap<IValue> heap;
 
-    public PrgState(IMyStack<IStmt> stk, IMyDictionary<String, IValue> symtbl, IMyList<IValue> ot, IMyDictionary<StringValue, BufferedReader> fT, IStmt prg) {
+    public PrgState(IMyStack<IStmt> stk, IMyDictionary<String, IValue> symtbl, IMyList<IValue> ot, IMyDictionary<StringValue, BufferedReader> fT, IMyHeap<IValue> hp, IStmt prg) {
         exeStack = stk;
         symTable = symtbl;
         out = ot;
         fileTable = fT;
         originalProgram = prg;
+        heap = hp;
         stk.push(prg);
     }
 
@@ -27,6 +29,7 @@ public class PrgState {
         exeStack = stack;
         symTable = stringValueMyDictionary;
         out = valueMyList;
+        heap = new MyHeap<IValue>();
     }
 
     @Override
@@ -35,6 +38,7 @@ public class PrgState {
                 "Exe Stack: " + exeStack + " \n" +
                 "Sym Table: " + symTable + " \n" +
                 "Output Console: " + out + " \n" +
+                "Heap: " + heap + " \n" +
                 "File Table: " + fileTable + " \n";
         return str;
     }
@@ -55,8 +59,16 @@ public class PrgState {
         return fileTable;
     }
 
+    public IMyHeap<IValue> getHeap() {
+        return heap;
+    }
+
     public void setFileTable(IMyDictionary<StringValue, BufferedReader> newFileTable) {
         fileTable = newFileTable;
+    }
+
+    public void setHeap(IMyHeap<IValue> hp) {
+        heap = hp;
     }
 
     public void setExeStack(IMyStack<IStmt> stack) {

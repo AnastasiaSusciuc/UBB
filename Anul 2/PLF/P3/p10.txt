@@ -1,0 +1,33 @@
+% sum(l1..l2) - returns the sum of the elements from a list
+% sum(l1..ln, var) =
+% 			var, if n == 0
+%			sum(l2..ln, var+l1), otherwise
+% sum(L-list, SC- colector variable, R-result)
+% sum(i, i, o)
+sum([], SC, SC).
+sum([H|T], SC, S):-
+    SC1 is SC+H, 
+    sum(T, SC1, S).
+
+% all_subsets(l1..ln) - creates all the subsets of a list
+% all_subsets(l1..ln) = 
+% 			[], 				if n == 0
+% 			l1 U subs(l2..ln),  n > 0
+% 			subs(l2..ln), 		otherwise
+all_subsets([], []).
+all_subsets([H|T], [H|R]):-
+    all_subsets(T, R).
+all_subsets([_|T], R):-
+    all_subsets(T, R).
+
+multiple(N, B)
+
+% one_sol(L-lista, S-suma, R-lista rezultat)
+% one_sol(l1..ln, S, r1..rn) - determines a solution of our problem
+% one_sol(i, i, o)
+one_sol(L, S, RL):-
+    all_subsets(L, RL),
+    sum(RL, 0, S).
+
+all_sols(L, S, R):-
+    findall(RL, one_sol(L, S, RL), R).

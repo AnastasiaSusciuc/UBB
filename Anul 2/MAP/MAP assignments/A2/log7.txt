@@ -1,0 +1,336 @@
+Program state
+Exe Stack: (int x;(x=10;((while (x>0) (print(x);x=x-1));print(x))))  
+Sym Table:  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: (x=10;((while (x>0) (print(x);x=x-1));print(x))) int x  
+Sym Table:  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: (x=10;((while (x>0) (print(x);x=x-1));print(x)))  
+Sym Table: x --> 0  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: ((while (x>0) (print(x);x=x-1));print(x)) x=10  
+Sym Table: x --> 0  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: ((while (x>0) (print(x);x=x-1));print(x))  
+Sym Table: x --> 10  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 10  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 10  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 10  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 10  
+Output Console: 10  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 9  
+Output Console: 10  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 9  
+Output Console: 10  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 9  
+Output Console: 10  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 9  
+Output Console: 10 9  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 8  
+Output Console: 10 9  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 8  
+Output Console: 10 9  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 8  
+Output Console: 10 9  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 8  
+Output Console: 10 9 8  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 7  
+Output Console: 10 9 8  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 7  
+Output Console: 10 9 8  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 7  
+Output Console: 10 9 8  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 7  
+Output Console: 10 9 8 7  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 6  
+Output Console: 10 9 8 7  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 6  
+Output Console: 10 9 8 7  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 6  
+Output Console: 10 9 8 7  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 6  
+Output Console: 10 9 8 7 6  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 5  
+Output Console: 10 9 8 7 6  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 5  
+Output Console: 10 9 8 7 6  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 5  
+Output Console: 10 9 8 7 6  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 5  
+Output Console: 10 9 8 7 6 5  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 4  
+Output Console: 10 9 8 7 6 5  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 4  
+Output Console: 10 9 8 7 6 5  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 4  
+Output Console: 10 9 8 7 6 5  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 4  
+Output Console: 10 9 8 7 6 5 4  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 3  
+Output Console: 10 9 8 7 6 5 4  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 3  
+Output Console: 10 9 8 7 6 5 4  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 3  
+Output Console: 10 9 8 7 6 5 4  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 3  
+Output Console: 10 9 8 7 6 5 4 3  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 2  
+Output Console: 10 9 8 7 6 5 4 3  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 2  
+Output Console: 10 9 8 7 6 5 4 3  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 2  
+Output Console: 10 9 8 7 6 5 4 3  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 2  
+Output Console: 10 9 8 7 6 5 4 3 2  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 1  
+Output Console: 10 9 8 7 6 5 4 3 2  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) (print(x);x=x-1)  
+Sym Table: x --> 1  
+Output Console: 10 9 8 7 6 5 4 3 2  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1 print(x)  
+Sym Table: x --> 1  
+Output Console: 10 9 8 7 6 5 4 3 2  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1)) x=x-1  
+Sym Table: x --> 1  
+Output Console: 10 9 8 7 6 5 4 3 2 1  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x) (while (x>0) (print(x);x=x-1))  
+Sym Table: x --> 0  
+Output Console: 10 9 8 7 6 5 4 3 2 1  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: print(x)  
+Sym Table: x --> 0  
+Output Console: 10 9 8 7 6 5 4 3 2 1  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack:  
+Sym Table: x --> 0  
+Output Console: 10 9 8 7 6 5 4 3 2 1 0  
+Heap:  
+File Table:  
+

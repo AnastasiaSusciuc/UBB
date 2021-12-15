@@ -1,4 +1,5 @@
 package model.expression;
+import model.ADT.IMyHeap;
 import model.value.IValue;
 import model.ADT.IMyDictionary;
 import model.exception.ExpressionException;
@@ -12,7 +13,7 @@ public class VarExp implements IExp {
     }
 
     @Override
-    public IValue eval(IMyDictionary<String, IValue> tbl) throws ExpressionException {
+    public IValue eval(IMyDictionary<String, IValue> tbl, IMyHeap<IValue> heap) throws ExpressionException {
         return tbl.lookup(var_ex);
     }
 

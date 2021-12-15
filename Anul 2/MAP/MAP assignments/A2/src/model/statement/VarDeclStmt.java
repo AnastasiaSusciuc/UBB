@@ -5,10 +5,7 @@ import model.ADT.IMyStack;
 import model.state.PrgState;
 import model.exception.ADTException;
 import model.exception.StatementException;
-import model.type.BoolType;
-import model.type.IType;
-import model.type.IntType;
-import model.type.StringType;
+import model.type.*;
 import model.value.BoolValue;
 import model.value.IValue;
 import model.value.IntValue;
@@ -28,17 +25,9 @@ public class VarDeclStmt implements IStmt {
         IMyDictionary <String, IValue> table = state.getSymTable();
         if (table.isDefined(name)) {
             throw new StatementException("Variable is already declared");
-        } else {
-            if (type.equals(new IntType())) {
-                table.add(name, new IntType().defaultValue());
-            }else if (type.equals(new BoolType())) {
-                table.add(name, new BoolType().defaultValue());
-            }else if (type.equals(new StringType())) {
-                table.add(name, new StringType().defaultValue());
-            }  else {
-                throw new StatementException("Type does not exist");
-            }
-        }
+        } else
+            table.add(name, type.defaultValue());
+
         state.setSymTable(table);
         state.setExeStack(stack);
         return state;

@@ -1,0 +1,84 @@
+Program state
+Exe Stack: (Ref(int) v;(new(v, 20);(Ref(Ref(int)) a;(new(a, v);(new(v, 30);print(rH(rH(a))))))))  
+Sym Table:  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: (new(v, 20);(Ref(Ref(int)) a;(new(a, v);(new(v, 30);print(rH(rH(a))))))) Ref(int) v  
+Sym Table:  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: (new(v, 20);(Ref(Ref(int)) a;(new(a, v);(new(v, 30);print(rH(rH(a)))))))  
+Sym Table: v --> (0, int)  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: (Ref(Ref(int)) a;(new(a, v);(new(v, 30);print(rH(rH(a)))))) new(v, 20)  
+Sym Table: v --> (0, int)  
+Output Console:  
+Heap:  
+File Table:  
+
+Program state
+Exe Stack: (Ref(Ref(int)) a;(new(a, v);(new(v, 30);print(rH(rH(a))))))  
+Sym Table: v --> (1, int)  
+Output Console:  
+Heap: 1-20  
+File Table:  
+
+Program state
+Exe Stack: (new(a, v);(new(v, 30);print(rH(rH(a))))) Ref(Ref(int)) a  
+Sym Table: v --> (1, int)  
+Output Console:  
+Heap: 1-20  
+File Table:  
+
+Program state
+Exe Stack: (new(a, v);(new(v, 30);print(rH(rH(a)))))  
+Sym Table: a --> (0, Ref(int)) v --> (1, int)  
+Output Console:  
+Heap: 1-20  
+File Table:  
+
+Program state
+Exe Stack: (new(v, 30);print(rH(rH(a)))) new(a, v)  
+Sym Table: a --> (0, Ref(int)) v --> (1, int)  
+Output Console:  
+Heap: 1-20  
+File Table:  
+
+Program state
+Exe Stack: (new(v, 30);print(rH(rH(a))))  
+Sym Table: a --> (2, Ref(int)) v --> (1, int)  
+Output Console:  
+Heap: 1-20 2-(1, int)  
+File Table:  
+
+Program state
+Exe Stack: print(rH(rH(a))) new(v, 30)  
+Sym Table: a --> (2, Ref(int)) v --> (1, int)  
+Output Console:  
+Heap: 1-20 2-(1, int)  
+File Table:  
+
+Program state
+Exe Stack: print(rH(rH(a)))  
+Sym Table: a --> (2, Ref(int)) v --> (3, int)  
+Output Console:  
+Heap: 1-20 2-(1, int) 3-30  
+File Table:  
+
+Program state
+Exe Stack:  
+Sym Table: a --> (2, Ref(int)) v --> (3, int)  
+Output Console: 20  
+Heap: 1-20 2-(1, int) 3-30  
+File Table:  
+

@@ -1,0 +1,58 @@
+% 12.
+% a. Define a predicate to add after every element from a list, the divisors of that number.
+% [8, 7, 6] => [8, 2, 4, 7, 6, 2, 3]
+
+% Mathematical model:
+% insert_after_one(elem, div, l1l2..ln) =
+% 		l1l2..ln, 										if elem <= 2 or div == elem
+% 		div U insert_after_one(elem, div+1, l1l2..ln), 	if elem%div == 0
+%		insert_after_one(elem, div+1, l1l2..ln), 		otherwise
+
+% insert_after_one(N:number, Div:number, L:list, R:list)
+% flow model: insert_div(i, i, i, o)
+
+insert_after_one(N, _, L, L) :- N =< 2.
+insert_after_one(N, N, L, L).
+insert_after_one(N, Div, L, [Div|R]) :- N mod Div =:= 0, !,
+    NDiv is Div + 1,
+    insert_after_one(N, NDiv, L, R).
+insert_after_one(N, Div, L, R) :-
+    NDiv is Div + 1,
+    insert_after_one(N, NDiv, L, R).
+
+% insert_after_all(l1...ln) =
+% 	[], n = 0
+% 	insert_after_one(l1, 2) U insert_after_all(l2...ln), otherwise
+
+% insert_after_all(L:list, R:list)
+% flow model: insert_after_all(i, o)
+
+insert_after_all([], []).
+insert_after_all([H|T], [H|R]) :-
+    insert_after_all(T, RD),
+    insert_after_one(H, 2, RD, R).
+
+
+% b. For a heterogeneous list, formed from integer numbers and list of numbers, 
+% define a predicate to add in every sublist the divisors of every element.
+% Eg.: [1, [2, 5, 7], 4, 5, [1, 4], 3, 2, [6, 2, 1], 4, [7, 2, 8, 1], 2] =>
+% [1, [2, 5, 7], 4, 5, [1, 4, 2], 3, 2, [6, 2, 3, 2, 1], 4, [7, 2, 8, 2, 4, 1], 2]
+
+% Mathematical model:
+% insert_div_heter_list(l1l2..ln) = 
+% 		[], n == 0
+% 		insert_after_all(l1) U insert_div_heter_list(l2..ln), if(isList(l1))
+%		l1 U insert_div_heter_list(l2..ln), otherwise
+
+% insert_div_heter_list(L:list, R:list)
+% flow model: insert_div_heter_list(i, o)
+
+insert_div_heter_list([], []).
+insert_div_heter_list([H|T], [HR|R]) :- is_list(H), !,
+    insert_after_all(H, HR),
+    insert_div_heter_list(T, R).
+insert_div_heter_list([H|T], [H|R]) :-
+    insert_div_heter_list(T, R).
+
+
+

@@ -1,4 +1,5 @@
 package model.expression;
+import model.ADT.IMyHeap;
 import model.value.IValue;
 import model.ADT.IMyDictionary;
 import model.value.IntValue;
@@ -24,11 +25,11 @@ public class ArithExp implements IExp {
     }
 
     @Override
-    public IValue eval(IMyDictionary<String, IValue> tbl) throws ExpressionException {
+    public IValue eval(IMyDictionary<String, IValue> tbl, IMyHeap<IValue> heap) throws ExpressionException {
         IValue val1, val2;
-        val1 = e1.eval(tbl);
+        val1 = e1.eval(tbl, heap);
         if (val1.getType().equals(new IntType())) {
-            val2 = e2.eval(tbl);
+            val2 = e2.eval(tbl, heap);
             if (val2.getType().equals(new IntType())) {
                 IntValue i1 = (IntValue)val1;
                 IntValue i2 = (IntValue)val2;

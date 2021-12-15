@@ -24,7 +24,7 @@ public class PrintStmt implements IStmt{
     public PrgState execute(PrgState state) throws StatementException, ExpressionException {
         IMyStack<IStmt> stack = state.getStack();
         IMyList<IValue> outConsole = state.getOutConsole();
-        outConsole.add(exp.eval(state.getSymTable()));
+        outConsole.add(exp.eval(state.getSymTable(), state.getHeap()));
         state.setExeStack(stack);
         state.setOutConsole(outConsole);
         return state;

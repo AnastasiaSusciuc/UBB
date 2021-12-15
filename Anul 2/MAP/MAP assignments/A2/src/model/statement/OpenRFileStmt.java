@@ -25,7 +25,7 @@ public class OpenRFileStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws StatementException, ExpressionException {
         IMyDictionary<String, IValue> symTable = state.getSymTable();
-        IValue val = expression.eval(symTable);
+        IValue val = expression.eval(symTable, state.getHeap());
 
         if (val.getType().equals(new StringType())) {
             IMyDictionary<StringValue, BufferedReader> fileTable = state.getFileTable();

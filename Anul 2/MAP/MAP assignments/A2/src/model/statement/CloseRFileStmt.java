@@ -28,7 +28,7 @@ public class CloseRFileStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws StatementException, ExpressionException, ADTException {
         IMyDictionary<String, IValue> symTable = state.getSymTable();
-        IValue val = exp.eval(symTable);
+        IValue val = exp.eval(symTable, state.getHeap());
         if (val.getType().equals(new StringType())) {
             IMyDictionary<StringValue, BufferedReader> fileTable = state.getFileTable();
             StringValue stringVal = (StringValue) val;

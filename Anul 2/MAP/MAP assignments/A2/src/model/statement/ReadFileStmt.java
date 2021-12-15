@@ -34,7 +34,7 @@ public class ReadFileStmt implements IStmt {
 
         if (symTable.isDefined(varName)) {
             if (symTable.lookup(varName).getType().equals(new IntType())) {
-                IValue val = exp.eval(symTable);
+                IValue val = exp.eval(symTable, state.getHeap());
                 if (val.getType().equals(new StringType())) {
                     StringValue stringVal = (StringValue) val;
                     if (fileTable.isDefined(stringVal)) {
