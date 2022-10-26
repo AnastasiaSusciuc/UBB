@@ -1,17 +1,15 @@
 class SymbolTable:
     def __init__(self):
-        self.__alphabet = [
-            '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-            'u', 'v', 'w', 'x', 'y', 'z',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X', 'Y', 'Z',
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '"',
-        ]
         self.__power = 191
         self.__hash_modulo = 997
         self.__hash_table = [[] for _ in range(self.__hash_modulo + 5)]
 
     def __find_hash_value(self, x):
+        """
+        computes the hash value
+        :param x: the value to be hashed
+        :return: the hash value
+        """
         str_x = str(x)
         hash_value = 0
         for char in str_x:
@@ -19,12 +17,46 @@ class SymbolTable:
         return hash_value
 
     def add(self, key):
+        """
+        adds an element into the hashtable
+        :param key: the value of the element
+        :return: the hash value and the position of the element in its list
+        """
         hash_value = self.__find_hash_value(key)
 
         if key not in self.__hash_table[hash_value]:
             self.__hash_table[hash_value].append(key)
 
         return hash_value, self.__hash_table[hash_value].index(key)
+
+    def remove(self, key):
+        """
+        removes the key from hashtable
+        :param key: the element to be removed
+        :return: the hash value
+        """
+        hash_value = self.__find_hash_value(key)
+        if key in self.__hash_table[hash_value]:
+            self.__hash_table[hash_value].remove(key)
+
+        return hash_value
+
+    def exists(self, key):
+        """
+        :param key: the element we are looking for
+        :return: True if key is inside the hash table
+        """
+        hash_value = self.__find_hash_value(key)
+        return key in self.__hash_table[hash_value]
+
+    def print_all_values(self):
+        """
+        prints all the keys inside the hashtable
+        :return: -
+        """
+        for i in range(self.__hash_modulo):
+            for key in self.__hash_table[i]:
+                print(key)
 
 
 identifierST = SymbolTable()
@@ -34,7 +66,10 @@ identifiers = ["variable", "ana", "apples", "chocolates"]
 constants = [0, 1, 2, 2.5, 5.555]
 
 for val in identifiers:
-    print(val, identifierST.add(val), identifierST.add(val))
+    identifierST.add(val)
 
-for val in constants:
-    print(val, constantsST.add(val), constantsST.add(val))
+identifierST.print_all_values()
+
+print("AFTER REMOVAL")
+identifierST.remove(identifiers[0])
+identifierST.print_all_values()
