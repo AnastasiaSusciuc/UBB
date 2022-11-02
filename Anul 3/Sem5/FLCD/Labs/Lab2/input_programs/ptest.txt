@@ -1,1 +1,1 @@
-read(a{i});
+var a := 'a';

@@ -1,6 +1,6 @@
 ***
 var a integer;
-var b integer;
+var a integer;
 var c integer;
 read(a);
 read(b);

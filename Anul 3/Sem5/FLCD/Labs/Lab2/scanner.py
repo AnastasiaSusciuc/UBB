@@ -22,7 +22,7 @@ class Scanner:
         self.__get_tokens()
         lineCounter = 1
 
-        with open('input_programs/p1.txt') as reader:
+        with open('input_programs/perr.txt') as reader:
             for line in reader:
                 tokens = self.__tokenize(line)
                 for i in range(len(tokens)):
@@ -50,10 +50,16 @@ class Scanner:
             print(self.__exception_message)
 
     def __is_constant(self, token):
-        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^([+-]?[1-9][0-9]*.[0-9]*)', token) is not None
+        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^([+-]?[1-9][0-9]*\.[0-9]*$)', token) is not None
 
     def __is_identifier(self, token):
         return re.match(r'^_?[a-zA-Z]([a-zA-Z]|[0-9])*$', token) is not None
+
+    def __inside_operator(self, char):
+        for op in self.operators:
+            if char in op:
+                return True
+        return False
 
     def __add_exception_message(self, token, line):
         self.__exception_message += 'Lexical error at token \"' + token + '\" at line ' + str(line) + "\n"
@@ -68,15 +74,8 @@ class Scanner:
         with open('scanner_output/pif.out', 'w') as writer:
             writer.write(str(self.__pif))
 
-    def __inside_operator(self, char):
-        for op in self.operators:
-            if char in op:
-                return True
-        return False
-
     def __get_operator_token(self, line, index):
         token = ''
-
         while index < len(line) and self.__inside_operator(line[index]):
             token += line[index]
             index += 1
