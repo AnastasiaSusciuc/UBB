@@ -50,10 +50,10 @@ class Scanner:
             print(self.__exception_message)
 
     def __is_constant(self, token):
-        return re.match(r'^(0|[+-]?[1-9][0-9]*)$', token) is not None
+        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^([+-]?[1-9][0-9]*.[0-9]*)', token) is not None
 
     def __is_identifier(self, token):
-        return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9])*$', token) is not None
+        return re.match(r'^_?[a-zA-Z]([a-zA-Z]|[0-9])*$', token) is not None
 
     def __add_exception_message(self, token, line):
         self.__exception_message += 'Lexical error at token \"' + token + '\" at line ' + str(line) + "\n"
