@@ -1,0 +1,20 @@
+***
+var a real;
+var b real;
+var c real;
+read(a);
+read(b);
+read(c);
+condition (a :<= b && a :<= c)
+    ***
+        write(a);
+    ***
+otherwise condition (b :<= a && b :<= c)
+    ***
+        write(b);
+    ***
+otherwise
+    ***
+        write(c);
+    ***
+***

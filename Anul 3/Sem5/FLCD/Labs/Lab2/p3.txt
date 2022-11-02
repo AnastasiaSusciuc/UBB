@@ -1,0 +1,15 @@
+***
+var a[100] integer;
+var n integer;
+var sum long_integer;
+read(n);
+step_loop(i, 1, n, 1)
+    ***
+        read(a[i]);
+    ***
+step_loop(i, 1, n, 1)
+    ***
+        sum := sum + a[i];
+    ***
+write(sum);
+***

@@ -54,22 +54,24 @@ class SymbolTable:
         prints all the keys inside the hashtable
         :return: -
         """
+        list_all_keys = []
         for i in range(self.__hash_modulo):
             for key in self.__hash_table[i]:
-                print(key)
+                list_all_keys.append(key)
+        return  list_all_keys
 
 
-identifierST = SymbolTable()
-constantsST = SymbolTable()
-
-identifiers = ["variable", "ana", "apples", "chocolates"]
-constants = [0, 1, 2, 2.5, 5.555]
-
-for val in identifiers:
-    identifierST.add(val)
-
-identifierST.print_all_values()
-
-print("AFTER REMOVAL")
-identifierST.remove(identifiers[0])
-identifierST.print_all_values()
+# identifierST = SymbolTable()
+# constantsST = SymbolTable()
+#
+# identifiers = ["variable", "ana", "apples", "chocolates"]
+# constants = [0, 1, 2, 2.5, 5.555]
+#
+# for val in identifiers:
+#     identifierST.add(val)
+#
+# identifierST.print_all_values()
+#
+# print("AFTER REMOVAL")
+# identifierST.remove(identifiers[0])
+# identifierST.print_all_values()
