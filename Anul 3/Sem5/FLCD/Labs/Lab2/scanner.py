@@ -1,50 +1,32 @@
 from Lab2.PIF import PIF
 from Lab2.symbol_table import SymbolTable
 import re
-from re import split
-
-
-def get_tokens():
-    return open('token.in', 'r').read().splitlines()
-
-
-def split_string(string, delimiters):
-    pattern = r'|'.join(delimiters)
-    return split(pattern, string)
-
-
-def isConstant(token):
-    return re.match(r'^(0|[+-]?[1-9][0-9]*)$', token) is not None
-
-
-def isIdentifier(token):
-    return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9])*$', token) is not None
 
 
 class Scanner:
 
     def __init__(self):
-        self.__exceptionMessage = ""
+        self.__exception_message = ""
         self.__symbol_table_identifiers = SymbolTable()
         self.__symbol_table_constants = SymbolTable()
         self.__pif = PIF()
         # self.operators = ["+", "-", ":=", ":<=", ":>=", ":>", ":<", "&&"]
         # self.separators = ["***", " ", ";", "(", ")", "[", "]"]
-        # self.reservedWords = ["var", "integer", "read", "read", "write", "condition", "otherwise", "long_integer",
+        # self.reserved_words = ["var", "integer", "read", "read", "write", "condition", "otherwise", "long_integer",
         #                       "step_loop", "string"]
         self.separators = []
         self.operators = []
-        self.reservedWords = []
+        self.reserved_words = []
 
     def scan(self):
-        self.get_tokens()
+        self.__get_tokens()
         lineCounter = 1
 
         with open('p1.txt') as reader:
             for line in reader:
                 tokens = self.__tokenize(line)
                 for i in range(len(tokens)):
-                    if tokens[i] in self.reservedWords + self.separators + self.operators:
+                    if tokens[i] in self.reserved_words + self.separators + self.operators:
                         self.__pif.add(tokens[i], (-1, -1))
                     elif tokens[i] in self.operators and i < len(tokens) - 1:
                         if re.match("[1-9]", tokens[i + 1]):
@@ -52,23 +34,29 @@ class Scanner:
                             continue
                         else:
                             self.__add_exception_message(tokens[i], lineCounter)
-                    elif isIdentifier(tokens[i]):
+                    elif self.__is_identifier(tokens[i]):
                         hash_val, index = self.__symbol_table_identifiers.add(tokens[i])
                         self.__pif.add("id", (hash_val, index))
-                    elif isConstant(tokens[i]):
+                    elif self.__is_constant(tokens[i]):
                         hash_val, index = self.__symbol_table_constants.add(tokens[i])
                         self.__pif.add("const", (hash_val, index))
                     else:
                         self.__add_exception_message(tokens[i], lineCounter)
                 lineCounter = lineCounter+1
         self.__write_scan_output()
-        if self.__exceptionMessage == '':
+        if self.__exception_message == '':
             print("Lexically correct")
         else:
-            print(self.__exceptionMessage)
+            print(self.__exception_message)
+
+    def __is_constant(self, token):
+        return re.match(r'^(0|[+-]?[1-9][0-9]*)$', token) is not None
+
+    def __is_identifier(self, token):
+        return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9])*$', token) is not None
 
     def __add_exception_message(self, token, line):
-        self.__exceptionMessage += 'Lexical error at token \"' + token + '\" at line ' + str(line) + "\n"
+        self.__exception_message += 'Lexical error at token \"' + token + '\" at line ' + str(line) + "\n"
 
     def __write_scan_output(self):
         with open('st_constants.out', 'w') as writer:
@@ -80,33 +68,27 @@ class Scanner:
         with open('pif.out', 'w') as writer:
             writer.write(str(self.__pif))
 
-    def isPartOfOperator(self, char):
+    def __inside_operator(self, char):
         for op in self.operators:
             if char in op:
                 return True
         return False
 
-    def isPartOfSeparator(self, char):
-        for op in self.separators:
-            if char in op:
-                return True
-        return False
-
-    def getOperatorToken(self, line, index):
+    def __get_operator_token(self, line, index):
         token = ''
 
-        while index < len(line) and self.isPartOfOperator(line[index]):
+        while index < len(line) and self.__inside_operator(line[index]):
             token += line[index]
             index += 1
 
         return token, index
 
-    def getStringToken(self, line, index):
+    def __get_string_token(self, line, index):
         token = ''
         quotes = 0
 
         while index < len(line) and quotes < 2:
-            if line[index] == '\'':
+            if line[index] == '\'' or line[index] == '\"':
                 quotes += 1
             token += line[index]
             index += 1
@@ -118,17 +100,17 @@ class Scanner:
         index = 0
         tokens = []
         while index < len(line):
-            if self.isPartOfOperator(line[index]):
+            if self.__inside_operator(line[index]):
                 if token:
                     tokens.append(token)
-                token, index = self.getOperatorToken(line, index)
+                token, index = self.__get_operator_token(line, index)
                 tokens.append(token)
                 token = ''
 
             elif line[index] == '\"':
                 if token:
                     tokens.append(token)
-                token, index = self.getStringToken(line, index)
+                token, index = self.__get_string_token(line, index)
                 tokens.append(token)
                 token = ''
 
@@ -149,7 +131,7 @@ class Scanner:
 
         return tokens
 
-    def get_tokens(self):
+    def __get_tokens(self):
         lineCounter = 0
         with open('token.in') as reader:
             for line in reader:
@@ -159,7 +141,7 @@ class Scanner:
                 elif lineCounter < 19:
                     self.operators.append(line)
                 else:
-                    self.reservedWords.append(line)
+                    self.reserved_words.append(line)
                 lineCounter = lineCounter+1
         if " " not in self.separators:
             self.separators.append(" ")
