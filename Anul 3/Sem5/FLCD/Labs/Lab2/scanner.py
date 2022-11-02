@@ -22,7 +22,7 @@ class Scanner:
         self.__get_tokens()
         lineCounter = 1
 
-        with open('p1.txt') as reader:
+        with open('input_programs/p1.txt') as reader:
             for line in reader:
                 tokens = self.__tokenize(line)
                 for i in range(len(tokens)):
@@ -59,13 +59,13 @@ class Scanner:
         self.__exception_message += 'Lexical error at token \"' + token + '\" at line ' + str(line) + "\n"
 
     def __write_scan_output(self):
-        with open('st_constants.out', 'w') as writer:
+        with open('scanner_output/st_constants.out', 'w') as writer:
             writer.write(str(self.__symbol_table_constants.print_all_values()))
 
-        with open('st_identifiers.out', 'w') as writer:
+        with open('scanner_output/st_identifiers.out', 'w') as writer:
             writer.write(str(self.__symbol_table_identifiers.print_all_values()))
 
-        with open('pif.out', 'w') as writer:
+        with open('scanner_output/pif.out', 'w') as writer:
             writer.write(str(self.__pif))
 
     def __inside_operator(self, char):
