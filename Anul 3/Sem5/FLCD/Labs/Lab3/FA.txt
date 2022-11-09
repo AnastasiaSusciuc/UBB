@@ -1,0 +1,13 @@
+Q = p q
+Sigma = a b c 1 2
+q0 = p
+F = q
+S =
+p a q
+p b q
+p c q
+q a q
+q b q
+q c q
+q 1 q
+q 2 q
