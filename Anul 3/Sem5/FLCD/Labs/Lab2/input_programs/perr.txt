@@ -2,8 +2,8 @@
 var a[100] integer;
 var n integer;
 var sum long_integer;
-var message string;
-message := “suma;
+var abc string;
+abc := “suma;
 read(n);
 step_loop(i, 1, n)
     ***
@@ -14,5 +14,5 @@ step_loop(i, 1, n, 1)
         sum := sum + a[i];
     ***
 write(sum);
-write(message);
+write(abc);
 ***

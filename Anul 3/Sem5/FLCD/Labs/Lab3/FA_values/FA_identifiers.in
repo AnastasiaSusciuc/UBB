@@ -1,0 +1,30 @@
+Q = p q
+Sigma = a b c d e f s u m n i 0 1 2
+q0 = p
+F = q
+S =
+p a q
+p b q
+p c q
+p d q
+p e q
+p f q
+p s q
+p u q
+p m q
+p n q
+p i q
+q a q
+q b q
+q c q
+q d q
+q e q
+q f q
+q s q
+q u q
+q m q
+q n q
+q 0 q
+q 1 q
+q 2 q
+q i q

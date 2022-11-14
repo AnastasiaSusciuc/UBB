@@ -1,0 +1,48 @@
+Q = p q r t s
+Sigma = + - 0 1 2 3 4 5 6 7 8 9 .
+q0 = p
+F = q s r
+S =
+p 0 q
+p 1 r
+p 2 r
+p 3 r
+p 4 r
+p 5 r
+p 6 r
+p 7 r
+p 8 r
+p 9 r
+p + t
+p - t
+t 1 r
+t 2 r
+t 3 r
+t 4 r
+t 5 r
+t 6 r
+t 7 r
+t 8 r
+t 9 r
+r 0 r
+r 1 r
+r 2 r
+r 3 r
+r 4 r
+r 5 r
+r 6 r
+r 7 r
+r 8 r
+r 9 r
+r . s
+s 0 s
+s 1 s
+s 2 s
+s 3 s
+s 4 s
+s 5 s
+s 7 s
+s 6 s
+s 8 s
+s 9 s
+q . s

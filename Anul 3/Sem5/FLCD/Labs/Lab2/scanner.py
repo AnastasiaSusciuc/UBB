@@ -2,6 +2,8 @@ from Lab2.PIF import PIF
 from Lab2.symbol_table import SymbolTable
 import re
 
+from Lab3.FA import FA
+
 
 class Scanner:
 
@@ -17,6 +19,8 @@ class Scanner:
         self.separators = []
         self.operators = []
         self.reserved_words = []
+        self.FA_constants = FA("./../Lab3/FA_values/FA_constants.in")
+        self.FA_identifiers = FA("./../Lab3/FA_values/FA_identifiers.in")
 
     def scan(self):
         self.__get_tokens()
@@ -34,10 +38,12 @@ class Scanner:
                             continue
                         else:
                             self.__add_exception_message(tokens[i], lineCounter)
-                    elif self.__is_identifier(tokens[i]):
+                    elif self.FA_identifiers.isAccepted(tokens[i]):
+                    # elif self.__is_identifier(tokens[i]):
                         hash_val, index = self.__symbol_table_identifiers.add(tokens[i])
                         self.__pif.add("id", (hash_val, index))
-                    elif self.__is_constant(tokens[i]):
+                    elif self.FA_constants.isAccepted(tokens[i]):
+                    # elif self.__is_constant(tokens[i]):
                         hash_val, index = self.__symbol_table_constants.add(tokens[i])
                         self.__pif.add("const", (hash_val, index))
                     else:
@@ -144,6 +150,8 @@ class Scanner:
                 lineCounter = lineCounter+1
         if " " not in self.separators:
             self.separators.append(" ")
+        if "\n" not in self.separators:
+            self.separators.append("\n")
 
 
 Scanner().scan()
