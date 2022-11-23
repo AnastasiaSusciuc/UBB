@@ -8,7 +8,7 @@ class FA:
         self.P = {}
         self.__commands = {}
         self.__read_FA_from_file()
-        # self.__build_menu()
+        self.__build_menu()
 
     def get_states(self):
         return self.Q
@@ -118,6 +118,7 @@ class FA:
         self.qf = line[2:]
 
     def __read_productions(self, line):
+        # to do it is transition
         line = line.split(" ")
         if len(line) <= 2:
             raise Exception("A production is not valid!" + str(line))
