@@ -26,7 +26,6 @@ class MyMainScreenState extends State<MyMainScreen> {
         children: <Widget>[
           const Padding(
             padding: EdgeInsets.fromLTRB(60, 100, 20, 0),
-
           ),
           Container(
               alignment: Alignment.bottomCenter,
@@ -41,7 +40,7 @@ class MyMainScreenState extends State<MyMainScreen> {
                   child: const Text(
                     "Find your teacher",
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: Colors.black,
                       fontFamily: 'Arial'
                     )),
                 )

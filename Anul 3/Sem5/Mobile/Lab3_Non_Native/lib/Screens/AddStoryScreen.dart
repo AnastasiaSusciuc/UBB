@@ -199,7 +199,7 @@ class AddStoryScreenState extends State<AddStoryScreen> {
                                 color: Colors.black,
                                 fontSize: 21.0,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: 'Arial'),
+                                fontFamily: 'SomeFam'),
                             hintText: 'Description',
                           ),
                         ),
@@ -227,7 +227,7 @@ class AddStoryScreenState extends State<AddStoryScreen> {
                                         color: Colors.black,
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: 'Arial')),
+                                        fontFamily: 'SomeFam')),
                               )),
                         )),
                     Container(
@@ -246,7 +246,7 @@ class AddStoryScreenState extends State<AddStoryScreen> {
                                         color: Colors.black,
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: 'Arial')),
+                                        fontFamily: 'SomeFam')),
                               )),
                         ))
                   ])

@@ -8,6 +8,19 @@ class Grammar:
         self.__productions = []
         self.__start_symbol = None
         self.file_path = "/Users/anastasiasusciuc/Desktop/UBB/Anul 3/Sem5/FLCD/Labs/Lab4/g1.txt"
+        self.read_grammar()
+
+    def get_non_terms(self):
+        return self.__non_terms
+
+    def get_productions(self):
+        return self.__productions
+
+    def split_rhs(self, prod):
+        return prod.split(" ")
+
+    def isNonTerminal(self, value):
+        return value in self.__non_terms
 
     def read_grammar(self):
         lineCounter = 0
@@ -78,6 +91,6 @@ class Grammar:
         return True
 
 
-grammar = Grammar()
-grammar.read_grammar()
-grammar.print_menu()
+# grammar = Grammar()
+# grammar.read_grammar()
+# grammar.print_menu()

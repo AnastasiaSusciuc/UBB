@@ -81,7 +81,7 @@ class ListScreenState extends State<ListScreen> {
             child: ListView.builder(
                 itemCount: teachers.length,
                 itemBuilder: (context, index) {
-                  return templateStory(teachers[index]);
+                  return templateCard(teachers[index]);
                 })),
       ),
       floatingActionButton: FloatingActionButton(
@@ -100,7 +100,7 @@ class ListScreenState extends State<ListScreen> {
     );
   }
 
-  Widget templateStory(story) {
+  Widget templateCard(story) {
     return Card(
         elevation: 0,
         // margin: EdgeInsets.zero,
@@ -113,7 +113,7 @@ class ListScreenState extends State<ListScreen> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                     child: Text(
-                      "${story.first_name}    ${DateFormat('yyyy-MM-dd').format(story.date)}     ${story.last_name}",
+                      "${DateFormat('yyyy-MM-dd').format(story.date)}     ${story.last_name} ${story.first_name}",
                       style: const TextStyle(fontSize: 18),
                     ),
                   ),
