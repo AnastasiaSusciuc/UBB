@@ -46,6 +46,6 @@ class UI:
             opt = input(">")
 
 
-grammar = Grammar("g2.txt")
+grammar = Grammar("g1.txt")
 parser = Parser(grammar)
 ui = UI(grammar, parser)

@@ -1,7 +1,8 @@
-S A B C
-( ) + * int
+S T EP TP F
+( ) + * id
 S
-S -> A B
-A -> ( S ) | int C
-B -> + S | E
-C -> * A | E
+S -> T EP
+EP -> + T EP | E
+T -> F TP
+TP -> * F TP | E
+F -> ( S ) | id
