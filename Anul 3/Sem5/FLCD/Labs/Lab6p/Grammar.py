@@ -46,3 +46,10 @@ class Grammar:
             if len(prod.lhs) > 1:
                 return False
         return True
+
+    def return_prod_lhs_non_terminal(self, non_term):
+        productions = []
+        for one in self.productions:
+            if non_term in one.lhs:
+                productions.append(one)
+        return productions

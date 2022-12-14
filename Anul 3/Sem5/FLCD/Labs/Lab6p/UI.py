@@ -15,6 +15,9 @@ class UI:
         self.parser.print_set(self.parser.first_set)
         print("FOLLOW SET")
         self.parser.print_set(self.parser.follow_set)
+        print("TABLE")
+        for k in self.parser.table.keys():
+            print(k, '->', self.parser.table[k])
 
     def print_menu(self):
         print("What do you want to see?\na) set of non terminals\nb) set of terminals\nc) start symbol\nd) set of productions\ne) set of "
@@ -46,6 +49,6 @@ class UI:
             opt = input(">")
 
 
-grammar = Grammar("g1.txt")
+grammar = Grammar("g3.txt")
 parser = Parser(grammar)
 ui = UI(grammar, parser)

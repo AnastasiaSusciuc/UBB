@@ -10,8 +10,10 @@ class Parser:
         self.grammar = grammar
         self.first_set = {i: set() for i in self.grammar.non_terms + self.grammar.terms}
         self.follow_set = {i: set() for i in self.grammar.non_terms}
+        self.table = {}
         self.build_first_set()
         self.build_follow_set()
+        self.build_table()
 
     def print_set(self, set_to_print):
         for i in set_to_print:
@@ -107,7 +109,70 @@ class Parser:
                             self.follow_set[v[i]] = copySet
                             set_is_changed = True
 
+    def build_table(self):
+        nonterminals = self.grammar.non_terms
+        terminals = self.grammar.terms
+        index = 0
+        for prod in self.grammar.productions:
+            index = index + 1
+            # value = (rhs, count)
+            v = prod.rhs
+            rowSymbol = prod.lhs[0].strip()  # A
+            rule = v[0].split()  # alpha
 
+            for columnSymbol in terminals + ['E']:  # coloana/ a
+                pair = (rowSymbol, columnSymbol)  # M(A, a)
+                print("PAIR")
+                print(pair)
+                print(rule)
+                # rule 1 - 1
+                if rule[0] == columnSymbol and columnSymbol != 'E':
+                    print("primul iff _-- AAaaaaaaaaaa")
+                    print(pair)
+                    self.table[pair] = (v, index)
+                elif rule[0] in nonterminals and columnSymbol in self.first_set[rule[0]]:
+                    if pair not in self.table.keys():
+                        print("al doilea iff _-- bbbbbbbbbbbbbb")
+                        print(pair)
+                        self.table[pair] = (v, index)
+                    else:
+                        print(pair)
+                        print("Grammar is not LL(1).")
+                        assert False
+                else:
+                    # rule 1 - 2
+                    if rule[0] == 'E':
+                        for b in self.follow_set[rowSymbol]:
+                            if b == 'E':
+                                b = '$'
+                            self.table[(rowSymbol, b)] = (v, index)
+                    else:
+                        # rule 1 part 2
+                        firsts = set()
+                        for symbol in self.grammar.return_prod_lhs_non_terminal(rowSymbol):
+                            if symbol in nonterminals:
+                                firsts = firsts.union(self.first_set[symbol])
+                        if 'E' in firsts:
+                            for b in self.follow_set[rowSymbol]:
+                                if b == 'E':
+                                    b = '$'
+                                if (rowSymbol, b) not in self.table.keys():
+                                    self.table[(rowSymbol, b)] = v
+
+
+                    # print("PAIRRRRR")
+                    # print(pair)
+                    #
+                    # if pair in self.table.keys():
+                    #     print("VALUE")
+                    #     print(self.table[pair])
+
+        # rule 2
+        for t in terminals:
+            self.table[(t, t)] = ('pop', -1)
+
+        # rule 3
+        self.table[('$', '$')] = ('acc', -1)
 
     # def build_follow_set(self):
     #
