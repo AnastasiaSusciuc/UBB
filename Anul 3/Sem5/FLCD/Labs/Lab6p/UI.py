@@ -70,10 +70,10 @@ class UI:
             opt = input(">")
 
 
-grammar = Grammar("gAnis.txt")
-parser = Parser(grammar)
-ui = UI(grammar, parser, "seqAnis.txt")
-
-# grammar = Grammar("g3.txt")
+# grammar = Grammar("gAnis.txt")
 # parser = Parser(grammar)
-# ui = UI(grammar, parser, "seq.txt")
+# ui = UI(grammar, parser, "seqAnis.txt")
+
+grammar = Grammar("g3.txt")
+parser = Parser(grammar)
+ui = UI(grammar, parser, "seq.txt")

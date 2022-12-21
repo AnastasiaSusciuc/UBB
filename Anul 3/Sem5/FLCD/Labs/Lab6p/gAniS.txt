@@ -1,15 +1,18 @@
-<program> <list_instructions> <instruction> <decl_instruction> <arr_decl_instruction> <var_decl_instruction> <letter> <identifier> <var_type>
-*** id var integer ; [ ] unsigned_int
+<program> <list_instructions> <assign_instruction> <declarations> <instruction> <decl_instruction> <var_decl_instruction> <letter> <identifier> <if> <condition> <T> <relation> <var_type>
+*** id var integer ; unsigned_int read write > if then else = const +
 <program>
-<program> -> *** <list_instructions> ***
+<program> -> *** <declarations> <list_instructions> ***
+<declarations> -> <var_decl_instruction>
 <list_instructions> -> E
 <list_instructions> -> <instruction> <list_instructions>
-<instruction> -> <decl_instruction>
+<instruction> -> <if>
 <decl_instruction> -> <var_decl_instruction>
-<decl_instruction> -> <arr_decl_instruction>
-<arr_decl_instruction> -> var <identifier> [ unsigned_int ] <var_type> ;
 <var_decl_instruction> -> var <identifier> <var_type> ;
-<identifier> -> E
-<identifier> -> <letter> <identifier>
-<letter> -> id
+<identifier> -> id
 <var_type> -> integer
+<condition> -> <identifier> <relation> <identifier>
+<relation> -> >
+<if> -> if <condition> then <assign_instruction> <T>
+<T> -> E
+<T> -> else <assign_instruction>
+<assign_instruction> -> <identifier> = <identifier> + const ;

@@ -1,1 +1,1 @@
-*** var id integer ; var id integer ; var id [ unsigned_int ] integer ; ***
+*** var id integer ; if id > id then id = id + const ; else id = id + const ; ***

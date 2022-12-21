@@ -38,7 +38,7 @@ class Parser:
     def add_first_set(self, initialSet, items):
 
         copySet = initialSet
-        for i in range(len(items)):
+        for i in range(len(items)):  # s -> A B
             if items[i] in self.grammar.non_terms:
                 copySet = copySet.union(entry for entry in self.first_set[items[i]] if entry != 'E')
                 if 'E' in self.first_set[items[i]]:
@@ -128,11 +128,7 @@ class Parser:
                         # print(pair)
                         self.table[pair] = (v, index)
                     else:
-                        # print(pair)
                         print("Grammar is not LL(1).")
-                        # print("PRINT")
-                        # for k in self.table.keys():
-                        #     print(k, '->', self.table[k])
                         assert False
                 else:
                     # rule 1 - 2
@@ -154,13 +150,6 @@ class Parser:
                                 if (rowSymbol, b) not in self.table.keys():
                                     self.table[(rowSymbol, b)] = v
 
-                    # print("PAIRRRRR")
-                    # print(pair)
-                    #
-                    # if pair in self.table.keys():
-                    #     print("VALUE")
-                    #     print(self.table[pair])
-
         # rule 2
         for t in terminals:
             self.table[(t, t)] = ('pop', -1)
@@ -174,9 +163,9 @@ class Parser:
         output = ""
         while stack[0] != '$' and word:
 
-            # print("WORD, STACK")
-            # print(word, stack)
-            # print(output)
+            print("WORD, STACK")
+            print(word, stack)
+            print(output)
 
             if word[0] == stack[0]:
                 word = word[1:]
@@ -189,8 +178,6 @@ class Parser:
                 else:
                     stack.pop(0)
                     rhs, index = self.table[(a, x)][0], self.table[(a, x)][1]
-                    # print("RHSSSS")
-                    # print(rhs)
                     rhs = rhs[0].split()
                     for i in range(len(rhs) - 1, -1, -1):
                         if rhs[i] != 'E':
@@ -199,8 +186,6 @@ class Parser:
 
         if stack[0] == '$' and word:
             return None
-        # elif not word and stack[0] != '$':
-        #     return None
         elif not word:
             while stack[0] != '$':
                 a = stack[0]
@@ -215,31 +200,3 @@ class Parser:
                 print(output)
 
             return output
-
-    # def build_follow_set(self):
-    #
-    #     # for term in self.grammar.non_terms:
-    #     self.follow_set[self.grammar.start_symbol].add("E")
-    #
-    #     set_is_changed = True
-    #     while set_is_changed is True:
-    #         set_is_changed = False
-    #         for prod in self.grammar.productions:
-    #             for term in prod.rhs:
-    #                 v = term.split()
-    #                 for i in range(len(v)):
-    #                     if v[i].strip() not in self.grammar.non_terms:  # if the literal in the rhs of
-    #                         # the production is a non-terminal then we skip it
-    #                         continue
-    #                     copySet = self.follow_set[v[i]]
-    #
-    #                     if i < len(v) - 1:  # if the non-terminal is not the last one in the rhs of
-    #                         # the production
-    #                         copySet = copySet.union(self.innerLoop(copySet, v[i + 1],
-    #                                                                self.follow_set[prod.lhs[0].strip()]))
-    #                     else:
-    #                         copySet = copySet.union(self.follow_set[prod.lhs[0].strip()])
-    #
-    #                     if len(self.follow_set[v[i]]) != len(copySet):
-    #                         self.follow_set[v[i]] = copySet
-    #                         set_is_changed = True
