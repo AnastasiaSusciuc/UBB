@@ -55,15 +55,6 @@ class Parser:
         return copySet
 
     def build_first_set(self):
-
-        # for prod in self.grammar.productions:
-        #     for term in prod.rhs:
-        #         term = term.split()
-        #         if term[0] in self.grammar.terms:
-        #             self.first_set[prod.lhs[0]].add(term[0])
-        #         if term[0].strip == 'E':
-        #             self.first_set[prod.lhs[0]].add('E')
-
         for term in self.grammar.terms:
             self.first_set[term].add(term)
 
@@ -122,22 +113,26 @@ class Parser:
 
             for columnSymbol in terminals + ['E']:  # coloana/ a
                 pair = (rowSymbol, columnSymbol)  # M(A, a)
-                print("PAIR")
-                print(pair)
-                print(rule)
+                # print("PAIR")
+                # print(pair)
+                # print(rule)
                 # rule 1 - 1
                 if rule[0] == columnSymbol and columnSymbol != 'E':
-                    print("primul iff _-- AAaaaaaaaaaa")
-                    print(pair)
+                    # print("primul iff _-- aaaaaaaaaa")
+                    # print(pair, end=" ")
+                    # print(v, index)
                     self.table[pair] = (v, index)
                 elif rule[0] in nonterminals and columnSymbol in self.first_set[rule[0]]:
                     if pair not in self.table.keys():
-                        print("al doilea iff _-- bbbbbbbbbbbbbb")
-                        print(pair)
+                        # print("al doilea iff _-- bbbbbbbbbbbbbb")
+                        # print(pair)
                         self.table[pair] = (v, index)
                     else:
-                        print(pair)
+                        # print(pair)
                         print("Grammar is not LL(1).")
+                        # print("PRINT")
+                        # for k in self.table.keys():
+                        #     print(k, '->', self.table[k])
                         assert False
                 else:
                     # rule 1 - 2
@@ -159,7 +154,6 @@ class Parser:
                                 if (rowSymbol, b) not in self.table.keys():
                                     self.table[(rowSymbol, b)] = v
 
-
                     # print("PAIRRRRR")
                     # print(pair)
                     #
@@ -173,6 +167,54 @@ class Parser:
 
         # rule 3
         self.table[('$', '$')] = ('acc', -1)
+
+    def evaluate_seq(self, seq):
+        word = seq.split()
+        stack = [self.grammar.start_symbol, '$']
+        output = ""
+        while stack[0] != '$' and word:
+
+            # print("WORD, STACK")
+            # print(word, stack)
+            # print(output)
+
+            if word[0] == stack[0]:
+                word = word[1:]
+                stack.pop(0)
+            else:
+                x = word[0]
+                a = stack[0]
+                if (a, x) not in self.table.keys():
+                    return None
+                else:
+                    stack.pop(0)
+                    rhs, index = self.table[(a, x)][0], self.table[(a, x)][1]
+                    # print("RHSSSS")
+                    # print(rhs)
+                    rhs = rhs[0].split()
+                    for i in range(len(rhs) - 1, -1, -1):
+                        if rhs[i] != 'E':
+                            stack.insert(0, rhs[i])
+                    output += str(index) + " "
+
+        if stack[0] == '$' and word:
+            return None
+        # elif not word and stack[0] != '$':
+        #     return None
+        elif not word:
+            while stack[0] != '$':
+                a = stack[0]
+                if (a, '$') in self.table.keys():
+                    output += str(self.table[(a, '$')][1]) + " "
+                else:
+                    return None
+                stack.pop(0)
+
+                print("WORD, STACK")
+                print(word, stack)
+                print(output)
+
+            return output
 
     # def build_follow_set(self):
     #

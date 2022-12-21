@@ -53,3 +53,6 @@ class Grammar:
             if non_term in one.lhs:
                 productions.append(one)
         return productions
+
+    def get_production_for_index(self, index):
+        return self.productions[index-1]

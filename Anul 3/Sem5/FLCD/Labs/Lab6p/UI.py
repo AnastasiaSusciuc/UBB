@@ -1,12 +1,14 @@
 from Grammar import Grammar
 from Parser import Parser
+from Tree import Tree
 
 
 class UI:
 
-    def __init__(self, grammar, parser):
+    def __init__(self, grammar, parser, seq):
         self.grammar = grammar
         self.parser = parser
+        self.seq = seq
         # self.print_menu()
         self.run()
 
@@ -18,6 +20,25 @@ class UI:
         print("TABLE")
         for k in self.parser.table.keys():
             print(k, '->', self.parser.table[k])
+
+        result = self.parser.evaluate_seq(self.read_sequence(self.seq))
+
+        if result is None:
+            print("Sequence is not accepted")
+        else:
+            print("Sequence is accepted")
+            print(result)
+            t = Tree(self.grammar)
+            t.build(result.strip().split(' '))
+            t.print_table()
+
+    @staticmethod
+    def read_sequence(file):
+        sequence = ""
+        with open(file, 'r') as fin:
+            for line in fin.readlines():
+                sequence += line.strip() + " "
+        return sequence.strip()
 
     def print_menu(self):
         print("What do you want to see?\na) set of non terminals\nb) set of terminals\nc) start symbol\nd) set of productions\ne) set of "
@@ -49,6 +70,10 @@ class UI:
             opt = input(">")
 
 
-grammar = Grammar("g3.txt")
+grammar = Grammar("gAnis.txt")
 parser = Parser(grammar)
-ui = UI(grammar, parser)
+ui = UI(grammar, parser, "seqAnis.txt")
+
+# grammar = Grammar("g3.txt")
+# parser = Parser(grammar)
+# ui = UI(grammar, parser, "seq.txt")
