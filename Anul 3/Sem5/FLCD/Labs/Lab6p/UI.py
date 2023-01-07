@@ -6,29 +6,29 @@ from Tree import Tree
 class UI:
 
     def __init__(self, grammar, parser, seq):
-        self.grammar = grammar
-        self.parser = parser
-        self.seq = seq
+        self.__grammar = grammar
+        self.__parser = parser
+        self.__seq = seq
         # self.print_menu()
         self.run()
 
     def run(self):
         print("FIRST SET")
-        self.parser.print_set(self.parser.first_set)
+        self.__parser.print_set(self.__parser.first_set)
         print("FOLLOW SET")
-        self.parser.print_set(self.parser.follow_set)
+        self.__parser.print_set(self.__parser.follow_set)
         print("TABLE")
-        for k in self.parser.table.keys():
-            print(k, '->', self.parser.table[k])
+        for k in self.__parser.table.keys():
+            print(k, '->', self.__parser.table[k])
 
-        result = self.parser.evaluate_seq(self.read_sequence(self.seq))
+        result = self.__parser.evaluate_seq(self.read_sequence(self.__seq))
 
         if result is None:
             print("Sequence is not accepted")
         else:
             print("Sequence is accepted")
             print(result)
-            t = Tree(self.grammar)
+            t = Tree(self.__grammar)
             t.build(result.strip().split(' '))
             t.print_table()
 
@@ -46,27 +46,27 @@ class UI:
         opt = input(">")
         while opt != 'x':
             if opt == 'a':
-                print(self.grammar.non_terms)
+                print(self.__grammar.non_terms)
             if opt == 'b':
-                print(self.grammar.terms)
+                print(self.__grammar.terms)
             if opt == 'c':
-                print(self.grammar.start_symbol)
+                print(self.__grammar.start_symbol)
             if opt == 'd':
-                for one in self.grammar.productions:
+                for one in self.__grammar.productions:
                     print(one)
             if opt == 'e':
                 non_term = input("write your non term:")
-                for one in self.grammar.productions:
+                for one in self.__grammar.productions:
                     if non_term in one.lhs:
                         print(one)
             if opt == 'f':
-                if self.grammar.check_CFG():
+                if self.__grammar.check_CFG():
                     print("Grammar is CFG")
                 else:
                     print("Grammar is not CFG")
             if opt == 'g':
                 # symbol = input("First set for:")
-                print(self.parser.build_first_set())
+                print(self.__parser.build_first_set())
             opt = input(">")
 
 
@@ -74,6 +74,6 @@ class UI:
 # parser = Parser(grammar)
 # ui = UI(grammar, parser, "seqAnis.txt")
 
-grammar = Grammar("g3.txt")
+grammar = Grammar("input_programs/g3.txt")
 parser = Parser(grammar)
-ui = UI(grammar, parser, "seq.txt")
+ui = UI(grammar, parser, "input_sequences/seq.txt")
