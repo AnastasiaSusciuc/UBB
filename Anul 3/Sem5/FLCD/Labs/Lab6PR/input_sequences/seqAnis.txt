@@ -1,0 +1,1 @@
+*** var id integer ; if id > id then id = id + const ; else id = id + const ; ***

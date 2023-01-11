@@ -1,0 +1,10 @@
+S A B C
+( ) + * int
+S
+S -> A B
+A -> ( S )
+A -> int C
+B -> + S
+B -> E
+C -> * A
+C -> E
