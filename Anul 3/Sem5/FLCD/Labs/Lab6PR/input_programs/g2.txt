@@ -1,0 +1,8 @@
+S T EP TP F
+( ) + * id
+S
+S -> T EP
+EP -> + T EP | E
+T -> F TP
+TP -> * F TP | E
+F -> ( S ) | id
